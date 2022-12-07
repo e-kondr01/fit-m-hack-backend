@@ -1,0 +1,10 @@
+alembic
+asyncpg
+fastapi
+fastapi_pagination
+pydantic
+python-dotenv
+uvicorn
+email-validator
+sqlalchemy
+sqlakeyset

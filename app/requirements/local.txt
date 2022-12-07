@@ -1,0 +1,8 @@
+-r base.txt
+
+black
+mypy
+pylint
+isort
+flake8
+sqlalchemy[mypy]
