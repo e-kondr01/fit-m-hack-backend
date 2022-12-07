@@ -1,4 +1,4 @@
-# FastAPI + SQLAlchemy template
+# Fit-M Hackathon Backend
 ## Python version
 3.11
 ## Local

@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   fastapi:
-    container_name: template_fastapi
+    container_name: fit_m_fastapi
     expose:
       - 8000
     volumes:
