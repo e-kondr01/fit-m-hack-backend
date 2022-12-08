@@ -11,9 +11,10 @@ from sqlalchemy import (
     Integer,
     String,
     func,
+    select,
 )
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import column_property, relationship
 
 from .base import Base
 
@@ -119,3 +120,8 @@ class CompletedQuestion(Base):
     max_label = Column(String)
     min_value = Column(Float)
     max_value = Column(Float)
+
+
+Quiz.question_count = column_property(
+    select(func.count(Question.id)).where(Question.quiz_id == Quiz.id).scalar_subquery()
+)

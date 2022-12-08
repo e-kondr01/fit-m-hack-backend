@@ -36,6 +36,7 @@ class QuizDetailSchema(BaseQuizSchema):
 
 class QuizListSchema(BaseQuizSchema):
     id: UUID
+    address_count: int
 
 
 class CreateQuizSchema(BaseQuizSchema):
