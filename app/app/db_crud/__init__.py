@@ -1,9 +1,9 @@
-from app.models.quiz import Quiz
-from app.schemas.quiz import QuizListSchema
+from app.models.quiz import Question, Quiz
+from pydantic import BaseModel
 
 from .base import BaseCRUD
 
 # Implementation of "Repository" pattern
 # Create new Database CRUD adapters like this:
 # item_db = BaseCRUD[Item, CreateItemSchema, UpdateItemSchema](Item)
-quiz_db = BaseCRUD[Quiz, QuizListSchema, QuizListSchema](Quiz)
+question_db = BaseCRUD[Question, BaseModel, BaseModel](Question)

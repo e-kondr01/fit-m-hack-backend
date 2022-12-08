@@ -3,8 +3,7 @@ from uuid import UUID
 from pydantic import BaseModel
 
 
-class QuestionSchema(BaseModel):
-    id: UUID
+class BaseQuestionSchema(BaseModel):
     type: str
     text: str
 
@@ -12,18 +11,25 @@ class QuestionSchema(BaseModel):
         orm_mode = True
 
 
-class QuizDetailSchema(BaseModel):
+class RetrieveQuestionSchema(BaseQuestionSchema):
     id: UUID
-    name: str
-    questions: list[QuestionSchema]
-
-    class Config:
-        orm_mode = True
 
 
-class QuizListSchema(BaseModel):
-    id: UUID
+class BaseQuizSchema(BaseModel):
     name: str
 
     class Config:
         orm_mode = True
+
+
+class QuizDetailSchema(BaseQuizSchema):
+    id: UUID
+    questions: list[RetrieveQuestionSchema]
+
+
+class QuizListSchema(BaseQuizSchema):
+    id: UUID
+
+
+class CreateQuizSchema(BaseQuizSchema):
+    questions: list[BaseQuestionSchema]
