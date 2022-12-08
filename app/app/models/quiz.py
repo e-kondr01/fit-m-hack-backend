@@ -6,6 +6,7 @@ from sqlalchemy import (
     Column,
     DateTime,
     Enum,
+    Float,
     ForeignKey,
     Integer,
     String,
@@ -81,6 +82,8 @@ class Question(Base):
 
     min_label = Column(String)
     max_label = Column(String)
+    min_value = Column(Float)
+    max_value = Column(Float)
 
     __table_args__: tuple = (
         CheckConstraint(order > 0, name="check_order_positive"),
@@ -114,3 +117,5 @@ class CompletedQuestion(Base):
 
     min_label = Column(String)
     max_label = Column(String)
+    min_value = Column(Float)
+    max_value = Column(Float)

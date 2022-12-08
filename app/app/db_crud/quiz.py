@@ -68,6 +68,8 @@ class CompletedQuizCRUD(
             question_data["feature"] = question.feature
             question_data["min_label"] = question.min_label
             question_data["max_label"] = question.max_label
+            question_data["min_value"] = question.min_value
+            question_data["max_value"] = question.max_value
             question_data = jsonable_encoder(question_data)
             db_completed_question = CompletedQuestion(**question_data)
             session.add(db_completed_question)

@@ -11,6 +11,8 @@ class BaseQuestionSchema(BaseModel):
     feature: str | None
     min_label: str | None
     max_label: str | None
+    min_value: float | None
+    max_value: float | None
 
     class Config:
         orm_mode = True
