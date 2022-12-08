@@ -1,4 +1,4 @@
-from app.api.endpoints import auth, feature, quiz
+from app.api.endpoints import article, auth, feature, quiz
 from fastapi import APIRouter
 
 api_router = APIRouter()
@@ -18,4 +18,10 @@ api_router.include_router(
     feature.router,
     prefix="/features",
     tags=["Симптомы"],
+)
+
+api_router.include_router(
+    article.router,
+    prefix="/articles",
+    tags=["Статьи"],
 )

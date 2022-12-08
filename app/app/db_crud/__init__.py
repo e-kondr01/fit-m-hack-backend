@@ -1,3 +1,4 @@
+from app.models.article import Article
 from app.models.feature import Feature
 from app.models.quiz import Question
 from app.models.user import User
@@ -11,3 +12,4 @@ from .base import BaseCRUD
 question_db = BaseCRUD[Question, BaseModel, BaseModel](Question)
 feature_db = BaseCRUD[Feature, BaseModel, BaseModel](Feature)
 user_db = BaseCRUD[User, BaseModel, BaseModel](User)
+article_db = BaseCRUD[Article, BaseModel, BaseModel](Article)
