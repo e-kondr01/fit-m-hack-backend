@@ -19,6 +19,7 @@ class QuizCRUD(BaseCRUD[Quiz, CreateQuizSchema, CreateQuizSchema]):
         quiz_data = jsonable_encoder(quiz_data)
         db_quiz = self.model(**quiz_data)
         session.add(db_quiz)
+        await session.commit()
 
         for question_data in questions_data:
             question_data["quiz_id"] = db_quiz.id

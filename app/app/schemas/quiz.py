@@ -1,11 +1,16 @@
 from uuid import UUID
 
-from pydantic import BaseModel
+from app.models.quiz import QuestionTypes
+from pydantic import BaseModel, PositiveInt
 
 
 class BaseQuestionSchema(BaseModel):
-    type: str
+    type: QuestionTypes
     text: str
+    order: PositiveInt
+    feature: str | None
+    min_label: str | None
+    max_label: str | None
 
     class Config:
         orm_mode = True
