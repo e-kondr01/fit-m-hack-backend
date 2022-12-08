@@ -11,6 +11,8 @@ ROOT_DIR = Path(__file__).resolve(strict=True).parent
 
 class Settings(BaseSettings):
 
+    SECRET_KEY = "ASDV5w41r64564b1u65416s5e4rt1bASDFVad4fq5"
+
     # PostgreSQL Database Connection
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str

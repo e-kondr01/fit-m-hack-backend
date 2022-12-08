@@ -1,4 +1,6 @@
 from app.api.api import api_router
+from app.fastapi_users import fastapi_users
+from app.schemas.user import UserCreate, UserRead
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -18,3 +20,9 @@ app.add_middleware(
 )
 
 app.include_router(api_router, prefix="/api")
+
+app.include_router(
+    fastapi_users.get_register_router(UserRead, UserCreate),
+    prefix="/api/auth",
+    tags=["Регистрация"],
+)
