@@ -38,3 +38,19 @@ class QuizListSchema(BaseQuizSchema):
 
 class CreateQuizSchema(BaseQuizSchema):
     questions: list[BaseQuestionSchema]
+
+
+class CreateCompletedQuestionSchema(BaseModel):
+    question_id: UUID
+    answer: str
+
+    class Config:
+        orm_mode = True
+
+
+class CreateCompletedQuizSchema(BaseModel):
+    quiz_id: UUID
+    completed_questions: list[CreateCompletedQuestionSchema]
+
+    class Config:
+        orm_mode = True

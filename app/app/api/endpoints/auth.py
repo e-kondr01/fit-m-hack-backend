@@ -43,7 +43,7 @@ login_responses: OpenAPIResponseType = {
 
 
 @router.post(
-    "/login",
+    "/jwt/login",
     name=f"auth:{backend.name}.login",
     responses=login_responses,
 )
@@ -81,7 +81,9 @@ logout_responses: OpenAPIResponseType = {
 }
 
 
-@router.post("/logout", name=f"auth:{backend.name}.logout", responses=logout_responses)
+@router.post(
+    "/jwt/logout", name=f"auth:{backend.name}.logout", responses=logout_responses
+)
 async def logout(
     response: Response,
     user_token: Tuple[models.UP, str] = Depends(get_current_user_token),

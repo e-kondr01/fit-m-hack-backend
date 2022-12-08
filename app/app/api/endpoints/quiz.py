@@ -1,9 +1,16 @@
 import uuid
 from typing import Any
 
-from app.db_crud.quiz import quiz_db
+from app.db_crud.quiz import completed_quiz_db, quiz_db
 from app.deps import get_async_session
-from app.schemas.quiz import CreateQuizSchema, QuizDetailSchema, QuizListSchema
+from app.fastapi_users import current_user
+from app.models.user import User
+from app.schemas.quiz import (
+    CreateCompletedQuizSchema,
+    CreateQuizSchema,
+    QuizDetailSchema,
+    QuizListSchema,
+)
 from fastapi import APIRouter, Depends
 from fastapi_pagination import Page, Params
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -51,3 +58,19 @@ async def create_quiz(
 
     quiz = await quiz_db.create(session, quiz_in)
     return quiz
+
+
+@router.post("/completed/", response_model=CreateCompletedQuizSchema)
+async def create_completed_quiz(
+    completed_quiz_in: CreateCompletedQuizSchema,
+    session: AsyncSession = Depends(get_async_session),
+    user: User = Depends(current_user),
+) -> Any:
+    """
+    Создание пройденной анкеты
+    """
+
+    completed_quiz = await completed_quiz_db.create(
+        session, completed_quiz_in, user_id=user.id
+    )
+    return completed_quiz
