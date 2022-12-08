@@ -1,4 +1,5 @@
-from app.models.quiz import Question, Quiz
+from app.models.feature import Feature
+from app.models.quiz import Question
 from pydantic import BaseModel
 
 from .base import BaseCRUD
@@ -7,3 +8,4 @@ from .base import BaseCRUD
 # Create new Database CRUD adapters like this:
 # item_db = BaseCRUD[Item, CreateItemSchema, UpdateItemSchema](Item)
 question_db = BaseCRUD[Question, BaseModel, BaseModel](Question)
+feature_db = BaseCRUD[Feature, BaseModel, BaseModel](Feature)

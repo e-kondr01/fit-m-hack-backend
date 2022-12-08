@@ -74,6 +74,16 @@ class BaseCRUD(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             query = query.order_by(order_by_expression)
         return await paginate(session, query, params)
 
+    async def filter(self, session: AsyncSession, **attrs) -> list[ModelType]:
+        query = select(self.model)
+
+        filter_expression = self.get_filter_expression(**attrs)
+        if filter_expression is not None:
+            query = query.filter(filter_expression)
+
+        result = await session.execute(statement=query)
+        return result.scalars().all()
+
     def get_order_by_expression(self, order_by: str | None):
         if order_by:
             if order_by.startswith("-"):
