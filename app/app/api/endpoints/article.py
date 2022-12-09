@@ -29,7 +29,6 @@ async def get_recommended_articles(
         show_similarity_values=False,
         n_topics=closest_topics_num,
     )
-    articles = []
     for close_topic in closest_topics:
         article = await article_db.get(session, tags=close_topic)
         articles.append(article)
