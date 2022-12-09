@@ -25,8 +25,7 @@ router = APIRouter()
     response_model=Page[QuizListSchema],
 )
 async def get_quizzes(
-    session: AsyncSession = Depends(get_async_session),
-    params: Params = Depends(),
+    session: AsyncSession = Depends(get_async_session), params: Params = Depends()
 ) -> Any:
     """
     Получить список викторин.
@@ -85,11 +84,14 @@ async def create_completed_quiz(
 async def get_completed_quizzes(
     session: AsyncSession = Depends(get_async_session),
     params: Params = Depends(),
+    user_id: uuid.UUID | None = None,
 ) -> Any:
     """
-    Получить списка пройденных анкет
+    Получить список пройденных анкет
     """
-    quizzes = await completed_quiz_db.paginated_filter(session, params=params)
+    quizzes = await completed_quiz_db.paginated_filter(
+        session, params=params, user=user_id
+    )
     return quizzes
 
 

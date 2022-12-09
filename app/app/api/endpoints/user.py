@@ -19,7 +19,7 @@ async def get_users(
     params: Params = Depends(),
 ) -> Any:
     """
-    Получить список рекламодателей
+    Получить список пациентов
     """
     users = await user_db.paginated_filter(session, params=params)
     return users
