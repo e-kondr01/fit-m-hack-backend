@@ -103,7 +103,7 @@ class BaseCRUD(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         query = select(self.model).filter_by(**attrs)
 
         result = await session.execute(statement=query)
-        return result.scalars().all()
+        return result.unique().scalars().all()
 
     def get_order_by_expression(self, order_by: str | None):
         if order_by:
