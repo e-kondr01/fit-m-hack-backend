@@ -1,3 +1,4 @@
+from datetime import date
 from uuid import UUID
 
 from app.models.quiz import QuestionTypes
@@ -54,6 +55,39 @@ class CreateCompletedQuestionSchema(BaseModel):
 class CreateCompletedQuizSchema(BaseModel):
     quiz_id: UUID
     completed_questions: list[CreateCompletedQuestionSchema]
+
+    class Config:
+        orm_mode = True
+
+
+class CompletedQuestionDetailSchema(BaseModel):
+
+    answer: str
+    type: QuestionTypes
+    text: str
+    order: int
+    feature: str | None
+    min_label: str | None
+    max_label: str | None
+    min_value: float | None
+    max_value: float | None
+
+    class Config:
+        orm_mode = True
+
+
+class CompletedQuizDetailSchema(BaseModel):
+    name: str
+    created_at: date
+    questions: list[CompletedQuestionDetailSchema]
+
+    class Config:
+        orm_mode = True
+
+
+class CompletedQuizListSchema(BaseModel):
+    name: str
+    created_at: date
 
     class Config:
         orm_mode = True
