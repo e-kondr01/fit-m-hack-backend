@@ -17,9 +17,14 @@ from app.schemas.quiz import (
 )
 from fastapi import APIRouter, Depends
 from fastapi_pagination import Page, Params
+from sqlalchemy import Date, cast
 from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter()
+
+
+def normalize(x, x_max, x_min):
+    return (x - x_min) / (x_max - x_min)
 
 
 @router.get(
@@ -40,20 +45,30 @@ async def get_quiz_heatmap(
 
     if quizzes:
         first_quiz = quizzes[0]
-        columns.append(first_quiz.created_at)
+        columns.append(cast(first_quiz.created_at, Date))
         date_data = []
         for question in first_quiz.completed_questions:
             if question.type == QuestionTypes.RANGE:
                 indexes.append(question.feature)
-                date_data.append(float(question.answer))
+                norm_answer = normalize(
+                    float(question.answer),
+                    float(question.max_value),
+                    float(question.min_value),
+                )
+                date_data.append(norm_answer)
         data.append(date_data)
 
         for quiz in quizzes:
             date_data = []
-            columns.append(quiz.created_at)
+            columns.append(cast(quiz.created_at, Date))
             for question in quiz.completed_questions:
                 if question.type == QuestionTypes.RANGE:
-                    date_data.append(float(question.answer))
+                    norm_answer = normalize(
+                        float(question.answer),
+                        float(question.max_value),
+                        float(question.min_value),
+                    )
+                    date_data.append(norm_answer)
             data.append(date_data)
 
         # df = pd.DataFrame(index=['Симптом 1', 'Симптом 2', "Симп 3"],
