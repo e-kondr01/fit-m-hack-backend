@@ -5,7 +5,7 @@ class ArticleSchema(BaseModel):
     title: str
     short_description: str
     tags: str
-    image: str
+    image: str | None
 
     class Config:
         orm_mode = True
