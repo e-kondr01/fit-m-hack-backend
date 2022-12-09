@@ -1,3 +1,4 @@
+import uuid
 from typing import Any
 
 from app.db_crud import user_db
@@ -23,3 +24,18 @@ async def get_users(
     """
     users = await user_db.paginated_filter(session, params=params)
     return users
+
+
+@router.get(
+    "/{user_id}",
+    response_model=UserRead,
+)
+async def get_quiz(
+    user_id: uuid.UUID,
+    session: AsyncSession = Depends(get_async_session),
+) -> Any:
+    """
+    Получить пользователя
+    """
+    quiz = await user_db.get_or_404(session, id=user_id)
+    return quiz
