@@ -2,22 +2,13 @@ import uuid
 from typing import Any
 
 import pandas as pd
-from app.db_crud.quiz import completed_quiz_db, quiz_db
+import seaborn as sns
+from app.config import ROOT_DIR
+from app.db_crud.quiz import completed_quiz_db
 from app.deps import get_async_session
-from app.fastapi_users import current_user
 from app.models.quiz import QuestionTypes
-from app.models.user import User
-from app.schemas.quiz import (
-    CompletedQuizDetailSchema,
-    CompletedQuizListSchema,
-    CreateCompletedQuizSchema,
-    CreateQuizSchema,
-    QuizDetailSchema,
-    QuizListSchema,
-)
 from fastapi import APIRouter, Depends
-from fastapi_pagination import Page, Params
-from sqlalchemy import Date, cast, func
+from fastapi.responses import FileResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter()
@@ -71,10 +62,18 @@ async def get_quiz_heatmap(
                     date_data.append(norm_answer)
             data.append(date_data)
 
-        # df = pd.DataFrame(index=['Симптом 1', 'Симптом 2', "Симп 3"],
-        #          data=[[0.3, 0.2, 0.9],
-        #                [0.1, 1.0, 0.9],
-        #                [0.8, 0.7, 0.6]],
-        #          columns=["2022-04-16", '2022-04-30', '2022-05-14'])
-        return {"columns": columns, "indexes": indexes, "data": data}
+        df = pd.DataFrame(index=indexes, data=data, columns=columns)
+
+        heat = sns.heatmap(
+            df,
+            cmap=sns.color_palette("RdYlGn_r", 20, as_cmap=True),
+            linewidths=5,
+            vmin=0,
+            vmax=0.99,
+            cbar=False,
+        )
+        fig = heat.get_figure()
+        fig.savefig(ROOT_DIR / "out.png", dpi=300)
+
+        return FileResponse(ROOT_DIR / "out.png")
     return {}
