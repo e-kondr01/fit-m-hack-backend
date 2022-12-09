@@ -1,4 +1,5 @@
 from app.api.api import api_router
+from app.api.endpoints import ws
 from app.fastapi_users import fastapi_users
 from app.schemas.user import UserCreate, UserRead
 from fastapi import FastAPI
@@ -20,6 +21,8 @@ app.add_middleware(
 )
 
 app.include_router(api_router, prefix="/api")
+
+app.include_router(ws.router)
 
 app.include_router(
     fastapi_users.get_register_router(UserRead, UserCreate),
