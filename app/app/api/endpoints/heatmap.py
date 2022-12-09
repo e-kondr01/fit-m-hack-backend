@@ -78,6 +78,7 @@ async def get_quiz_heatmap(
             vmax=0.99,
             cbar=False,
         )
+        heat.set_xticklabels(heat.get_xticklabels(), rotation=0)
         fig = heat.get_figure()
         fig.savefig(ROOT_DIR / "out.png", dpi=300)
 
