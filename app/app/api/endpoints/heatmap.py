@@ -45,7 +45,7 @@ async def get_quiz_heatmap(
 
     if quizzes:
         first_quiz = quizzes[0]
-        columns.append(func.date(first_quiz.created_at))
+        columns.append(str(first_quiz.created_at).split("T")[0])
         date_data = []
         for question in first_quiz.completed_questions:
             if question.type == QuestionTypes.RANGE:
