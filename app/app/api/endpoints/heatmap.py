@@ -1,6 +1,7 @@
 import uuid
 from typing import Any
 
+import numpy as np
 import pandas as pd
 import seaborn as sns
 from app.config import ROOT_DIR
@@ -64,6 +65,8 @@ async def get_quiz_heatmap(
 
         print(indexes)
         print(data)
+        data = np.array(data)
+        data = np.transpose(data)
         print(columns)
         df = pd.DataFrame(index=indexes, data=data, columns=columns)
 
