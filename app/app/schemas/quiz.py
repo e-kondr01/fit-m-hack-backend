@@ -77,6 +77,7 @@ class CompletedQuestionDetailSchema(BaseModel):
 
 
 class CompletedQuizDetailSchema(BaseModel):
+    id: UUID
     name: str
     created_at: date
     questions: list[CompletedQuestionDetailSchema]
@@ -86,6 +87,7 @@ class CompletedQuizDetailSchema(BaseModel):
 
 
 class CompletedQuizListSchema(BaseModel):
+    id: UUID
     name: str
     created_at: date
 

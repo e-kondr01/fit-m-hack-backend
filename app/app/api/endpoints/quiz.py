@@ -79,7 +79,7 @@ async def create_completed_quiz(
 
 
 @router.get(
-    "/completed",
+    "/completed/",
     response_model=Page[CompletedQuizListSchema],
 )
 async def get_completed_quizzes(
@@ -94,10 +94,10 @@ async def get_completed_quizzes(
 
 
 @router.get(
-    "/completed/{quiz_id}",
+    "/completed/{quiz_id}/",
     response_model=CompletedQuizDetailSchema,
 )
-async def get_quiz(
+async def get_completed_quiz(
     quiz_id: uuid.UUID,
     session: AsyncSession = Depends(get_async_session),
 ) -> Any:
