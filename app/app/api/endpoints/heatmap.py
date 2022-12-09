@@ -62,6 +62,9 @@ async def get_quiz_heatmap(
                     date_data.append(norm_answer)
             data.append(date_data)
 
+        print(indexes)
+        print(data)
+        print(columns)
         df = pd.DataFrame(index=indexes, data=data, columns=columns)
 
         heat = sns.heatmap(
