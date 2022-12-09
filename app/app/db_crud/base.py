@@ -74,12 +74,33 @@ class BaseCRUD(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             query = query.order_by(order_by_expression)
         return await paginate(session, query, params)
 
+    async def paginated_filter_by(
+        self,
+        session: AsyncSession,
+        params: AbstractParams | None = None,
+        order_by: str | None = None,
+        **attrs,
+    ) -> AbstractPage[ModelType]:
+        query = select(self.model)
+        order_by_expression = self.get_order_by_expression(order_by)
+        if attrs:
+            query = query.filter_by(**attrs)
+        if order_by_expression is not None:
+            query = query.order_by(order_by_expression)
+        return await paginate(session, query, params)
+
     async def filter(self, session: AsyncSession, **attrs) -> list[ModelType]:
         query = select(self.model)
 
         filter_expression = self.get_filter_expression(**attrs)
         if filter_expression is not None:
             query = query.filter(filter_expression)
+
+        result = await session.execute(statement=query)
+        return result.scalars().all()
+
+    async def filter_by(self, session: AsyncSession, **attrs) -> list[ModelType]:
+        query = select(self.model).filter_by(**attrs)
 
         result = await session.execute(statement=query)
         return result.scalars().all()

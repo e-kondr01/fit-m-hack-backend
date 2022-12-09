@@ -89,7 +89,7 @@ async def get_completed_quizzes(
     """
     Получить список пройденных анкет
     """
-    quizzes = await completed_quiz_db.paginated_filter(
+    quizzes = await completed_quiz_db.paginated_filter_by(
         session, params=params, user_id=user_id
     )
     return quizzes

@@ -25,14 +25,14 @@ router = APIRouter()
 @router.get(
     "/",
 )
-async def get_completed_quizzes(
+async def get_quiz_heatmap(
     session: AsyncSession = Depends(get_async_session),
     user_id: uuid.UUID | None = None,
 ) -> Any:
     """
     Получить список пройденных анкет
     """
-    quizzes = await completed_quiz_db.filter(session, user_id=user_id)
+    quizzes = await completed_quiz_db.filter_by(session, user_id=user_id)
 
     columns = []
     indexes = []
