@@ -37,7 +37,7 @@ async def get_quiz_heatmap(
 
     if quizzes:
         first_quiz = quizzes[0]
-        columns.append(str(first_quiz.created_at).split(".")[0])
+        columns.append(str(first_quiz.created_at).split(" ")[0])
         date_data = []
         for question in first_quiz.completed_questions:
             if question.type == QuestionTypes.RANGE:
@@ -52,7 +52,7 @@ async def get_quiz_heatmap(
 
         for quiz in quizzes:
             date_data = []
-            columns.append(str(quiz.created_at).split(".")[0])
+            columns.append(str(quiz.created_at).split(" ")[0])
             for question in quiz.completed_questions:
                 if question.type == QuestionTypes.RANGE:
                     norm_answer = normalize(
