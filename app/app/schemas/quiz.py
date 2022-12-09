@@ -80,7 +80,7 @@ class CompletedQuizDetailSchema(BaseModel):
     id: UUID
     name: str
     created_at: date
-    questions: list[CompletedQuestionDetailSchema]
+    completed_questions: list[CompletedQuestionDetailSchema]
 
     class Config:
         orm_mode = True
