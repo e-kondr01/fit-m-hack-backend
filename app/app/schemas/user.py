@@ -6,10 +6,10 @@ from pydantic import BaseModel
 
 
 class BaseUserSchema(BaseModel):
-    role: str
-    name: str
-    birthdate: date
-    diagnosis: str
+    role: str | None
+    name: str | None
+    birthdate: date | None
+    diagnosis: str | None
 
 
 class UserRead(schemas.BaseUser[uuid.UUID], BaseUserSchema):
