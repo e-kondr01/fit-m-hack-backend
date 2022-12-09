@@ -17,7 +17,7 @@ from app.schemas.quiz import (
 )
 from fastapi import APIRouter, Depends
 from fastapi_pagination import Page, Params
-from sqlalchemy import Date, cast
+from sqlalchemy import Date, cast, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter()
@@ -45,7 +45,7 @@ async def get_quiz_heatmap(
 
     if quizzes:
         first_quiz = quizzes[0]
-        columns.append(cast(first_quiz.created_at, Date))
+        columns.append(func.date(first_quiz.created_at))
         date_data = []
         for question in first_quiz.completed_questions:
             if question.type == QuestionTypes.RANGE:
